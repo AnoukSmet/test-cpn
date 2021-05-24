@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'tourist_info/css/tourist_info.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="header-container header-container-small" id="tourist_info">
+    {% include 'components/navigation/navbar.html' %}
+    <div class="hero-text">
+        <h1>Tourist Info</h1>
+        <p>Have a look at our recommendations and start planning your trip!</p>
+    </div>
+</div>
+
+{% if request.user.is_superuser %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12" id="add-recommendation">
+                <a href="{% url 'add_recommendation' %}" class="button">Add recommendation</a>
+            </div>
+        </div>
+    </div>
+
+{% endif %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12" id="tourist-info-intro">
+            <h2 class="sub-heading" id="intro-heading">Welcome to the Silver Coast</h2>
+            <p>The Silver Coast, Portugal’s Costa de Prata is one of the treasures of Portugal. 
+                Less than an hour north of the capital city of Lisbon with a stretch of spectacular coastline that runs for approximately 150 km up towards the fishing town of Nazare. 
+
+                Worlds away from the rush and stress of modern life, the Silver Coast is now a second-home destination and lifestyle choice for many buyers in search of “the real Portugal”. 
+                A place which offers everything you expect on holiday...except the crowds!
+            
+                Click on the buttons below to start discovering places to visit, things to do and where to eat...
+                Create an account or login and start adding the recommendations to your favorites.
+                This way you can start planning your perfect stay at the Silver Coast in Portugal!
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container tourist-info-container">
+    <div class="accordion" id="accordionExample">
+    {% for category in categories %}
+        <div class="card recommendation-cards mb-4">
+            <div class="card-header recommendation-category" id="{{category.friendly_name}}">
+                <a data-toggle="collapse" href="#{{ category }}" role="button" aria-expanded="false" aria-controls="collapseExample" class="col-12 btn">
+                    {{ category.friendly_name }}
+                </a>
+            </div>
+            
+            <div id="{{ category }}" class="collapse" aria-labelledby="{{category.friendly_name}}" data-parent="#accordionExample">
+                <div class="card-body row">
+                {% for recommendation in recommendations %}
+                    {% if recommendation.category == category %}
+                    <div class="card col-12 col-md-4">
+                        <img src="{{ recommendation.image.url }}" class="card-img-top" alt="recommendation-image">
+                        <div>
+                            <h5 class="sub-heading mt-3 mb-2">{{ recommendation }}</h5>
+                            <p class="paragraph">{{ recommendation.intro }}.</p>
+                            <a href="{% url 'recommendation_detail' recommendation.id %}" class="button">See more</a>
+                        </div>
+                    </div>            
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+
+{% include 'components/social-media/social-media.html' %}
+
+{% include 'components/footer/footer.html' %}
+{% endblock %}

@@ -1,0 +1,354 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+{% endblock %}
+
+{% block content %}
+
+{% include 'components/navigation/navbar.html' %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="heading mb-4 mt-4 text-center">Reservations</h1>
+        </div>
+        <div class="accordion" id="reservation-accordion">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="reservations-collapse">
+                        <a data-toggle="collapse" href="#arrivals-today" role="button" aria-expanded="true" aria-controls="collapseExample" class="col-12 btn">
+                            Arrivals today
+                        </a>
+                    </div>
+                
+                    <div id="arrivals-today" class="collapse show" aria-labelledby="arrivals-today" data-parent="#reservation-accordion">
+                        <div class="card-body row">
+                            <div class="table-responsive">
+                                {% if arrivals_today %}
+                                    <table class="table" id="arrivals-today-table">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Room</th>
+                                            <th scope="col">Check in</th>
+                                            <th scope="col">Check out</th>
+                                            <th scope="col">Number of guests</th>
+                                            <th scope="col">Paid</th>
+                                            <th scope="col">Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for reservation in arrivals_today %}
+                                                {% for item in reservation.lineitems.all %}
+                                                    <tr>
+                                                        <th scope="row"><a href="{% url 'reservation_detail' reservation %}" class="reservations-links">{{ reservation.full_name }}</a></th>
+                                                        <td>{{ item.room }}</td>
+                                                        <td>{{item.check_in }}</td>
+                                                        <td>{{item.check_out }}</td>
+                                                        <td>{{ item.number_of_guests }}</td>
+                                                        {% if reservation.stripe_pid %}
+                                                            <td class="green"><i class="fas fa-check"></i></td>
+                                                        {% else %}
+                                                            <td class="red"><i class="fas fa-times"></i></td>
+                                                        {% endif %}
+                                                        <td><a href="{% url 'delete_reservation' reservation" class="reservations-links"><i class="fas fa-trash-alt"></i></a></td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>No arrivals today</p>
+                                {% endif %}
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="reservations-collapse">
+                        <a data-toggle="collapse" href="#departures" role="button" aria-expanded="true" aria-controls="collapseExample" class="col-12 btn">
+                            Departures today
+                        </a>
+                    </div>
+                
+                    <div id="departures" class="collapse show" aria-labelledby="departures" data-parent="#reservation-accordion">
+                        <div class="card-body row">
+                            <div class="table-responsive">
+                                {% if departures %}
+                                    <table class="table" id="departures-table">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Room</th>
+                                            <th scope="col">Check in</th>
+                                            <th scope="col">Check out</th>
+                                            <th scope="col">Number of guests</th>
+                                            <th scope="col">Paid</th>
+                                            <th scope="col">Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for reservation in departures %}
+                                                {% for item in reservation.lineitems.all %}
+                                                    <tr>
+                                                        <th scope="row"><a href="{% url 'reservation_detail' reservation %}" class="reservations-links">{{ reservation.full_name }}</a></th>
+                                                        <td>{{ item.room }}</td>
+                                                        <td>{{item.check_in }}</td>
+                                                        <td>{{item.check_out }}</td>
+                                                        <td>{{ item.number_of_guests }}</td>
+                                                        {% if reservation.stripe_pid %}
+                                                            <td class="green"><i class="fas fa-check"></i></td>
+                                                        {% else %}
+                                                            <td class="red"><i class="fas fa-times"></i></td>
+                                                        {% endif %}
+                                                        <td><a href="{% url 'delete_reservation' reservation" class="reservations-links"><i class="fas fa-trash-alt"></i></a></td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>No departures today</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="reservations-collapse">
+                        <a data-toggle="collapse" href="#inhouse" role="button" aria-expanded="true" aria-controls="collapseExample" class="col-12 btn">
+                            Inhouse Guests
+                        </a>
+                    </div>
+                
+                    <div id="inhouse" class="collapse show" aria-labelledby="inhouse" data-parent="#reservation-accordion">
+                        <div class="card-body row">
+                            <div class="table-responsive">
+                                {% if inhouse_guests %}
+                                    <table class="table" id="inhouse-table">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Room</th>
+                                            <th scope="col">Check in</th>
+                                            <th scope="col">Check out</th>
+                                            <th scope="col">Number of guests</th>
+                                            <th scope="col">Paid</th>
+                                            <th scope="col">Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for reservation in inhouse_guests %}
+                                                {% for item in reservation.lineitems.all %}
+                                                    <tr>
+                                                        <th scope="row"><a href="{% url 'reservation_detail' reservation %}" class="reservations-links">{{ reservation.full_name }}</a></th>
+                                                        <td>{{ item.room }}</td>
+                                                        <td>{{item.check_in }}</td>
+                                                        <td>{{item.check_out }}</td>
+                                                        <td>{{ item.number_of_guests }}</td>
+                                                        {% if reservation.stripe_pid %}
+                                                            <td class="green"><i class="fas fa-check"></i></td>
+                                                        {% else %}
+                                                            <td class="red"><i class="fas fa-times"></i></td>
+                                                        {% endif %}
+                                                        <td><a href="{% url 'delete_reservation' reservation" class="reservations-links"><i class="fas fa-trash-alt"></i></a></td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>No inhouse guests at the moment</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="reservations-collapse">
+                        <a data-toggle="collapse" href="#arrivals-next-7" role="button" aria-expanded="false" aria-controls="collapseExample" class="col-12 btn">
+                            Arrivals in the next 7 days
+                        </a>
+                    </div>
+                
+                    <div id="arrivals-next-7" class="collapse" aria-labelledby="arrivals-next-7" data-parent="#reservation-accordion">
+                        <div class="card-body row">
+                            <div class="table-responsive">
+                                {% if arrivals_next %}
+                                    <table class="table" id="arrivals-next-7-table">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Room</th>
+                                            <th scope="col">Check in</th>
+                                            <th scope="col">Check out</th>
+                                            <th scope="col">Number of guests</th>
+                                            <th scope="col">Paid</th>
+                                            <th scope="col">Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for reservation in arrivals_next %}
+                                                {% for item in reservation.lineitems.all %}
+                                                    <tr>
+                                                        <th scope="row"><a href="{% url 'reservation_detail' reservation %}" class="reservations-links">{{ reservation.full_name }}</a></th>
+                                                        <td>{{ item.room }}</td>
+                                                        <td>{{item.check_in }}</td>
+                                                        <td>{{item.check_out }}</td>
+                                                        <td>{{ item.number_of_guests }}</td>
+                                                        {% if reservation.stripe_pid %}
+                                                            <td class="green"><i class="fas fa-check"></i></td>
+                                                        {% else %}
+                                                            <td class="red"><i class="fas fa-times"></i></td>
+                                                        {% endif %}
+                                                        <td><a href="{% url 'delete_reservation' reservation" class="reservations-links"><i class="fas fa-trash-alt"></i></a></td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>No arrivals in the next 7 days</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="reservations-collapse">
+                        <a data-toggle="collapse" href="#upcoming-reservations" role="button" aria-expanded="false" aria-controls="collapseExample" class="col-12 btn">
+                            All upcoming reservations
+                        </a>
+                    </div>
+                
+                    <div id="upcoming-reservations" class="collapse" aria-labelledby="upcoming-reservations" data-parent="#reservation-accordion">
+                        <div class="card-body row">
+                            <div class="table-responsive">
+                                <table class="table" id="upcoming-reservations-table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Room</th>
+                                        <th scope="col">Check in</th>
+                                        <th scope="col">Check out</th>
+                                        <th scope="col">Number of guests</th>
+                                        <th scope="col">Paid</th>
+                                        <th scope="col">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for reservation in upcoming_reservations %}
+                                            {% for item in reservation.lineitems.all %}
+                                                <tr>
+                                                    <th scope="row"><a href="{% url 'reservation_detail' reservation %}" class="reservations-links">{{ reservation.full_name }}</a></th>
+                                                    <td>{{ item.room }}</td>
+                                                    <td>{{item.check_in }}</td>
+                                                    <td>{{item.check_out }}</td>
+                                                    <td>{{ item.number_of_guests }}</td>
+                                                    {% if reservation.stripe_pid %}
+                                                        <td class="green"><i class="fas fa-check"></i></td>
+                                                    {% else %}
+                                                        <td class="red"><i class="fas fa-times"></i></td>
+                                                    {% endif %}
+                                                    <td><a href="{% url 'delete_reservation' reservation" class="reservations-links"><i class="fas fa-trash-alt"></i></a></td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> 
+                    </div>
+                </div> 
+            </div>
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="reservations-collapse">
+                        <a data-toggle="collapse" href="#past-reservations" role="button" aria-expanded="false" aria-controls="collapseExample" class="col-12 btn">
+                            All past reservations
+                        </a>
+                    </div>
+                    <div id="past-reservations" class="collapse" aria-labelledby="past-reservations" data-parent="#reservation-accordion">
+                        <div class="card-body row">
+                            <div class="table-responsive">
+                                <table class="table reservation-table" id="past-reservations-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Room</th>
+                                            <th scope="col">Check in</th>
+                                            <th scope="col">Check out</th>
+                                            <th scope="col">Nr. of guests</th>
+                                            <th scope="col">Paid</th>
+                                            <th scope="col">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for reservation in past_reservations %}
+                                            {% for item in reservation.lineitems.all %}
+                                                <tr>
+                                                    <th scope="row"><a href="{% url 'reservation_detail' reservation %}" class="reservations-links">{{ reservation.full_name }}</a></th>
+                                                    <td>{{ item.room }}</td>
+                                                    <td>{{item.check_in }}</td>
+                                                    <td>{{item.check_out }}</td>
+                                                    <td>{{ item.number_of_guests }}</td>
+                                                    {% if reservation.stripe_pid %}
+                                                        <td class="green"><i class="fas fa-check"></i></td>
+                                                    {% else %}
+                                                        <td class="red"><i class="fas fa-times"></i></td>
+                                                    {% endif %}
+                                                    <td><a href="{% url 'delete_reservation' reservation %}" class="reservations-links"><i class="fas fa-trash-alt"></i></a></td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endfor %}
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> 
+                    </div>
+                </div>  
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% include 'components/social-media/social-media.html' %}
+{% include 'components/footer/footer.html' %}
+{% endblock %}
+
+
+{% block postloadjs %}
+    {{ block.super }}
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+        $(document).ready( function () {
+            $('#arrivals-today-table').DataTable();
+            $('#departures-table').DataTable();
+            $('#inhouse-table').DataTable();
+            $('#arrivals-next-7-table').DataTable();
+            $('#upcoming-reservations-table').DataTable();
+            $('#past-reservations-table').DataTable();
+        } );
+    </script>
+
+{% endblock %}
+
+
+

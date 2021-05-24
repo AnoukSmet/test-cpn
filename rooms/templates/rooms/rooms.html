@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'rooms/css/rooms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="header-container header-container-small" id="rooms">
+    {% include 'components/navigation/navbar.html' %}
+    <div class="hero-text">
+        <h1>Rooms</h1>
+        <p>Check out our 3 large double rooms below and pick your favorite!</p>
+    </div>
+</div>
+
+<div class="container rooms-container">
+    {% for room in rooms %}
+        <div class="row room-display">
+            <div class="col-12 col-md-4">
+                <div id="{{ room.id }}" class="carousel slide carousel-fade" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for image in room.images.all %}
+                            <div class="carousel-item {% if image.main_image == True %} active {% endif %}">
+                                <img class="d-block" src="{{ image.image.url }}" alt="room-image" >
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 room-description">
+                <h2 class="heading">{{room}}</h2>
+                <p>
+                    {{ room.intro }}
+                </p>
+                <a class="button rooms-buttons" href="{% url 'room_detail' room.id %}">More information about this room</a>
+            </div>
+        </div>
+        <div class="hr"></div>    
+    {% endfor %}
+</div>
+
+<div class="container information-container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="heading">Additional Information</h2>
+        </div>
+        <div class="col-12 ">
+            <p class="additional-information">
+                The villa is build around a well sheltered patio, from which you have a magnificent view on the lower garden, swimming pool and country side.
+                The patio is partly covered, offering good shelter on hot or rainy days.
+                At sunset it is the place to be for a ‘zen’ moment.
+
+                All rooms are renovated and the villa is adapted for receiving guests.
+                The renovation is done respecting the original architecture and Portugese culture.
+
+                In the morning we invite you in the spacious breakfast area where the buffet is waiting for you.
+                If you like to eat outside, the patio is a fantastic place to start a relaxing day.
+            </p>
+        </div>
+        <div class="col-12 col-md-4 breakfast-images d-flex align-items-center justify-content-center">
+            <img src="{{ MEDIA_URL }}breakfast_on_table.jpg" alt="breakfast-room" class="d-block">        
+        </div>
+        <div class="col-12 col-md-4 breakfast-images d-flex align-items-center justify-content-center">
+            <img src="{{ MEDIA_URL }}breakfast_room.jpg" alt="breakfast-room" class="d-block"> 
+        </div>
+        <div class="col-12 col-md-4 breakfast-images d-flex align-items-center justify-content-center">
+            <img src="{{ MEDIA_URL }}breakfast_table.jpg" alt="breakfast-room" class="d-block"> 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 amenities">
+            {% for category in categories %}
+                <h3 class="sub-heading mb-3 mt-5">{{ category.friendly_name }} </h3>
+                <div class="row">
+                {% for amenity in amenities %}
+                    {% if amenity.category == category %}
+                        {% if amenity.description %}
+                            <div class="col-12 col-md-6 policies">
+                                <h4 class="policy-heading"><strong>{{ amenity }}</strong></h4>
+                                <span>{{ amenity.description }}</span>
+                            </div>
+                        {% else %}
+                            <span class="col-12 col-sm-6 col-lg-4"> <i class="fas fa-check-square"></i> {{ amenity }} </span>
+                        {% endif %}
+                    {% endif %} 
+                {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% include 'components/social-media/social-media.html' %}
+
+{% include 'components/footer/footer.html' %}
+{% endblock %}
+
+
+{% block postloadjs %}
+    {{ block.super }}
+
+    <script type="text/javascript">
+
+        const firstCarousel = document.getElementById('1')
+        firstCarousel.setAttribute('data-interval', 3000);
+    
+        const secondCarousel = document.getElementById('2')
+        secondCarousel.setAttribute('data-interval', 4000);
+
+        const lastCarousel = document.getElementById('3')
+        lastCarousel.setAttribute('data-interval', 3500);
+
+    </script>
+{% endblock %}

@@ -1,0 +1,145 @@
+.profile-container {
+    border: 0.1rem solid #aa4e26;
+    margin: 2rem 0;    
+    float: left;
+    box-shadow: 0.1rem 0.1rem 0.8rem 0.1rem #aa4e26;
+}
+
+.reservations-container {
+    border: 0.1rem solid #aa4e26;
+    margin: 2rem 0;   
+    float: right;
+    box-shadow: 0.1rem 0.1rem 0.8rem 0.1rem #aa4e26;
+}
+
+#reservation-number {
+    word-break: break-all;
+}
+
+.profile-button {
+    float: right;
+    margin: 1rem 0;  
+}
+
+
+.contact-form-fields {
+    border: 0.1rem solid #aa4e26;
+    color: #000;
+    min-height: 3.5rem;
+    margin: 2rem 0;
+}
+
+.contact-form-fields::placeholder,
+.form-control {
+    color: #000;
+    font-size: 1.6rem;
+    font-family: "Karla", Arial, Helvetica, sans-serif;
+    
+}
+
+select,
+.contact-form-fields option {
+    font-size: 1.6rem !important;
+    color: #000;
+}
+
+select:invalid,
+select option[value=""] {
+    font-size: 1.6rem;
+    color: #000;
+}
+
+.contact-form-fields:focus,
+.contact-form-fields:hover {
+    border: 0.1rem solid #72351a;
+    box-shadow: 0.1rem 0.1rem 0.6rem 0.1rem #72351a !important;
+    color: #000;
+}
+
+.form-check-label {
+    color: #000;
+}
+
+.hr {
+    border: 0.1rem solid #aa4e26;
+    width: 90%;
+    margin: 1rem auto;
+}
+
+/* Favorites section */
+
+.favorite-category {
+    color: #72351a;
+}
+
+
+/* Reservations Page */
+
+.accordion {
+    width: 100%;
+}
+
+
+.reservation-table {
+    background-color: #fff;
+    color: #000;
+}
+
+.card-body {
+    background-color: #fff;
+    text-align: center;
+}
+
+.reservations-collapse {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+}
+
+.reservations-collapse a {
+    color: #FFFFEB;
+    font-family: "Baskervville", Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    background-color: #aa4e26;
+}
+
+.reservations-collapse a:hover {
+    background-color: #72351a;
+    color: #FFFFEB;
+    text-decoration: none;
+}
+
+#link-to-tourist_info {
+    text-decoration: none;
+    color: #aa4e26;
+}
+
+#link-to-tourist_info:hover {
+    text-decoration: underline;
+}
+
+
+.reservations-links {
+    text-decoration: none;
+    color: #aa4e26;
+}
+
+.reservations-links:hover {
+    color: #72351a;
+}
+
+
+.green {
+    color: #185A37;
+}
+
+.red {
+    color: #8b0000;
+}
+
+@media (min-width: 1024px){
+    .reservations-container {
+        margin-right: 5rem;
+    }
+}
+

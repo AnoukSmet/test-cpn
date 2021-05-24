@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'profiles/css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="header-container header-container-small" id="profile">
+    {% include 'components/navigation/navbar.html' %}
+    <div class="hero-text">
+        <h1>Profile</h1>
+        <p>View your bookings and start planning your trip by adding restaurants, places to visit and so on to your favorites</p>
+    </div>
+</div>
+<div class="container">
+    <div class="row ml-0 mr-0">
+        
+        <div class="col-12 col-lg-7 reservations-container">
+            {% if reservations %}
+            <h2 class="heading mb-4 mt-2">Your reservations</h2>
+            <div class="row">
+                {% if upcoming_reservations %}
+                    <h3 class="col-12 sub-heading ml-4 mb-3">Upcoming Reservations</h3>
+                    {% for reservation in upcoming_reservations %}
+                        <span class="d-block col-12 col-md-5 mt-2">Reservation Nr. :</span>
+                        <span class="d-block col-12 col-md-7 mt-2" id="reservation-number">{{ reservation }}</span>
+                        <span class="d-block col-12">Rooms:</span>
+                        {% for item in reservation.lineitems.all %}
+                        <span class="d-block col-12 col-md-5 ml-4">{{ item.room }}:   </span>
+                        <span class="d-block col-12 col-md-6">{{ item.check_in }} - {{ item.check_out }}</span>
+                        {% endfor %}
+                        <div class="col-12">
+                            <a href="{% url 'reservation_confirmation' reservation %}" class="button profile-button mb-2">View confirmation</a>
+                        </div>
+                    {% endfor %}  
+                {% else %}
+                    <h3 class="col-12 sub-heading ml-4 mb-3">No Upcoming Reservations</h3>
+                {% endif %}      
+                {% if past_reservations %}
+                    <h3 class="col-12 sub-heading ml-4">Past Reservations</h3> 
+                    {% for reservation in past_reservations %}
+                        <span class="d-block col-12 col-md-5 mt-2">Reservation Nr. :</span>
+                        <span class="d-block col-12 col-md-7 mt-2" id="past-reservation-number">{{ reservation }}</span>
+                        <span class="d-block col-12">Rooms:</span>
+                        {% for item in reservation.lineitems.all %}
+                        <span class="d-block col-12 col-md-5 ml-4">{{ item.room }}:   </span>
+                        <span class="d-block col-12 col-md-6">{{ item.check_in }} - {{ item.check_out }}</span>
+                        {% endfor %}
+                        <div class="col-12">
+                            <a href="{% url 'reservation_confirmation' reservation %}" class="button profile-button mb-2">View confirmation</a>
+                        </div>
+                    {% endfor %} 
+                {% else %}
+                    <h3 class="col-12 sub-heading ml-4">No Past Reservations</h3>     
+                {% endif %}  
+            </div>
+            {% else %}
+                <h2 class="heading mb-2 mt-2">You don't have any reservations yet.</h2>
+            {% endif %}
+        </div> 
+        <div class="col-12 col-lg-4 profile-container">
+            <h2 class="heading mb-4 mt-2">Your profile information</h2>
+            <div class="row">
+                <span class="d-block col-12">Full Name:</span>
+                <span class="d-block col-12 ml-4">{% if profile.default_full_name %}{{ profile.default_full_name }} {% endif %}</span>
+                <span class="d-block col-12">Email Address:</span>
+                <span class="d-block col-12 ml-4">{% if profile.default_email %} {{ profile.default_email }} {% endif %}</span>
+                <span class="d-block col-12">Phone Number:</span>
+                <span class="d-block col-12 ml-4">{% if profile.default_phone_number %} {{ profile.default_phone_number }} {% endif %}</span>
+                <span class="d-block col-12">Country:</span>
+                <span class="d-block col-12 ml-4">{% if profile.default_country %} {{ profile.default_country.name }} {% endif %}</span>
+            </div>
+            <a href="{% url 'edit_profile' %}" class="button profile-button">Edit profile information</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <h2 class="heading col-12 ml-4 mb-4">My Favorites</h2>
+        {% if favorites %}
+            {% for favorite in favorites %}
+            <div class="col-12 col-md-4">
+                <div class="card">
+                    <img src="{{ favorite.image.url }}" class="card-img-top" alt="...">
+                    <div>
+                        <h5 class="sub-heading mt-3 mb-2">{{ favorite }}</h5>
+                        <span class="favorite-category"><i class="fas fa-tag"></i> {{ favorite.category.friendly_name }}</span>
+                        <p class="paragraph">{{ favorite.intro }}.</p>
+                        <a href="{% url 'recommendation_detail' favorite.id %}" class="button">See more</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <p>You don't have any recommendations added yet to your favorites.</p>
+                <p>Visit our <a href="{% url 'tourist_info' %}" id="link-to-tourist_info">Tourist Information </a>page and start planning your trip.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+
+
+{% include 'components/social-media/social-media.html' %}
+
+{% include 'components/footer/footer.html' %}
+
+{% endblock %}

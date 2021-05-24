@@ -1,0 +1,175 @@
+#tourist_info {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/media/tourist_info_hero.jpg");
+}
+
+.recommendation-category {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+}
+
+.recommendation-category a {
+    color: #FFFFEB;
+    font-family: "Baskervville", Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    background-color: #aa4e26;
+    padding: 2rem;
+}
+
+.recommendation-category a:hover {
+    background-color: #72351a;
+    color: #FFFFEB;
+    text-decoration: none;
+}
+
+.card-body {
+    background-color: #fff;
+}
+
+.card-img-top{
+    max-width: 30rem;
+}
+
+#tourist-info-intro {
+    white-space: pre-line;
+    text-align: center;
+}
+
+#intro-heading {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.recommendation-cards {
+    margin-bottom: 0;
+}
+
+/* Add Recommendation for superuser */
+
+#add-recommendation {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+
+/* Recommendation Detail page */
+
+#recommendation-intro {
+    text-align: center;
+}
+
+#recommendation-intro h2 {
+    margin: 1rem 0;
+}
+
+#recommendation-intro p {
+     white-space: pre-line;
+     margin-bottom: 2rem;
+}
+
+#recommendation-intro  a {
+    font-size: 2.5rem;
+    color: #aa4e26;
+}
+
+#recommendation-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 2rem;
+}
+
+.recommendation-buttons {
+    margin: 0.5rem 0;
+    display: inline-block;
+}
+
+#additional-info p {
+    white-space: pre-line;
+}
+
+#view-recommendations {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+#view-recommendations a {
+    display: block;
+    margin-top: 1rem;
+}
+
+#update-recommendation {
+    text-align: right;
+    margin-top: 2rem;
+}
+
+#update-recommendation a {
+    color: #aa4e26;
+    background-color: transparent;
+    font-size: 2rem;
+}
+
+/* Modal */
+
+.modal-body {
+    text-align: center;
+}
+
+
+/* Add Recommendation Page */
+
+#add-recommendation-title,
+#edit-recommendation-title {
+    font-size: 2.5rem;
+    margin-top: 1.5rem;
+
+}
+
+.recommendation-form-fields {
+    border: 0.1rem solid #aa4e26;
+    color: #000;
+    margin: 2rem 0;
+}
+
+.recommendation-form-fields::placeholder,
+.form-control {
+    color: #000;
+    font-size: 1.6rem;
+    font-family: "Karla", Arial, Helvetica, sans-serif;
+    
+}
+
+.recommendation-form-fields:focus,
+.recommendation-form-fields:hover {
+    border: 0.1rem solid #72351a;
+    box-shadow: 0.1rem 0.1rem 0.6rem 0.1rem #72351a !important;
+    color: #000;
+}
+
+.image-file-button {
+    position: relative;
+    overflow: hidden;
+    margin-top: 2rem;
+}
+
+.image-file-button input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    cursor: pointer;
+    opacity: 0;
+}
+
+@media (min-width: 425px) {
+    #view-recommendations a {
+    display: inline;
+    margin-top: 1rem;
+    }
+}
+
+@media (min-width:992px) {
+    #add-recommendation {
+    text-align: right;
+    }
+}

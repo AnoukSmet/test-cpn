@@ -1,0 +1,107 @@
+/* Hero image rooms */
+
+#rooms {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/media/rooms_hero.jpg");
+}
+
+
+/* Rooms display */
+
+.rooms-container {
+    margin-top: 5rem;
+}
+
+.room-description h2 {
+    margin: 1rem 0 1.5rem;
+}
+
+.room-display {
+    margin: 2rem 0;
+}
+
+.carousel-item img {
+    width: 30rem;
+    height: 20rem;
+} 
+
+.rooms-buttons {
+    float: right;
+}
+
+.hr {
+    border: 0.1rem solid #FCBC49;
+    width: 100%;
+}
+
+/* Additional Information Section */
+
+.information-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.additional-information {
+    white-space: pre-line;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.breakfast-images img {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    max-width: 30rem;
+}
+
+.amenities {
+    text-align: left;
+    margin-bottom: 5rem;
+}
+
+.amenities i {
+    color: #aa4e26;
+}
+
+.policy-heading {
+    font-family: "Baskervville", Arial, Helvetica, sans-serif;
+    font-size: 1.8rem;
+    line-height: 1.8rem;
+    margin-bottom: 0;
+}
+
+.policies {
+    white-space: pre-line;
+    line-height: 1.8rem;
+}
+
+/* Rooms Detail page */
+
+.room-detail {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+.back {
+    text-align: left;
+}
+
+.back a {
+    color: #aa4e26;
+}
+
+.room-images img {
+    width: 100%;
+    height: auto;
+    max-width: 30rem;
+}
+
+#room-description {
+    white-space: pre-wrap;
+}
+
+#price-info {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.2rem;
+    margin: 2rem 0;
+}
